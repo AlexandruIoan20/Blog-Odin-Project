@@ -5,7 +5,7 @@ import { IconContext } from 'react-icons';
 import Link from "next/link"; 
 import Image from "next/image";
 import { useState, useEffect } from 'react'; 
-import { signIn, signOut, useSession, getProviers } from 'next-auth/react'; 
+import { signIn, signOut, useSession, getProviders } from 'next-auth/react'; 
 
 const AuthButton = ({ executeFunction, classes, name }) => { 
     return ( 
@@ -32,29 +32,62 @@ const NavBar = () => {
     const [ providers, setProviders ] = useState([]); 
     const [ toggleDropdown, setToggleDropdown ] = useState(false); 
 
+    useEffect( () => { 
+        const setGlobalProviders = async () => { 
+            const response = await getProviders(); 
+            setProviders(response); 
+            console.log({ response} ); 
+        }
+
+        setGlobalProviders(); 
+    }, []); 
+
+    useEffect( () => { 
+        console.log(session?.user); 
+    }, [session])
+
     return (
-        <nav className='bg-primary-purple py-1 px-1 flex flex-row w-screen'>
-            <CustomFaBlogger /> 
+        <nav className = 'bg-primary-purple py-1 px-1 flex flex-row w-screen'>
+            <Link href = "/">
+                <CustomFaBlogger /> 
+            </Link>
 
             {/* PC Design */}
-            <div className="ml-auto sm:flex hidden"> 
+            <div className = "ml-auto sm:flex hidden"> 
                 { session?.user ? 
                     ( 
-                        <div> 1 </div>
+                        <>
+                            <AuthButton 
+                                name = 'Sign Out'
+                                executeFunction={ signOut }
+                                classes = 'sign-button text-xs' 
+                            /> 
+
+                            <Link href = { `/users/${session?.user.id}`}>
+                                <Image
+                                    src = { session?.user.image } 
+                                    alt = "profile_image"
+                                    width = { 35 }
+                                    height = { 35 }
+                                    className = 'rounded-3xl ml-3'
+                                />
+                            </Link>
+                        </>
                     ) 
                     : 
                     ( 
                         <>
-                            <AuthButton 
-                                name = "Sign In"
-                                executeFunction = { () => { }}
-                                classes = 'sign-button'
-                            /> 
-                            <AuthButton 
-                                name = 'Log In'
-                                executeFunction = { () => { }}
-                                classes = 'log-button'
-                            /> 
+                            { providers && 
+                                Object.values(providers).map(provider => { 
+                                    return ( 
+                                        <AuthButton 
+                                        name = "Sign In"
+                                        executeFunction = { () => { signIn(provider.id) }}
+                                        classes = 'sign-button'
+                                    /> 
+                                    )
+                                })
+                            }
                         </>
                     )
                 }

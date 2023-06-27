@@ -9,7 +9,7 @@ const UserSchema = new Schema({
     }, 
     email: { 
         type: String, 
-        required: [ true, 'Email is required'],  
+        required: [ true, 'Email is required!'],  
     }, 
     image: { 
         type: String, 
@@ -20,11 +20,11 @@ const UserSchema = new Schema({
             ref: 'Post', 
         }, 
         likesCount: { 
-            type: Schema.Types.Integer, 
+            type: Schema.Types.Number, 
             default: 0, 
         }, 
         commentsCount: { 
-            type: Schema.Types.Integer, 
+            type: Schema.Types.Number, 
             default: 0, 
         }
     }
