@@ -7,3 +7,15 @@
 @tailwind base; 
 @tailwind utilities; 
 @tailwind components; 
+
+@layer components { 
+    .log-button { 
+        @apply bg-light-purple px-2 py-1 rounded-xl mx-2 font-satoshi transition-all duration-300
+            hover:bg-light-green hover:text-dark-purple hover:cursor-pointer hover:rounded-2xl hover:text-sm
+    }
+
+    .sign-button { 
+        @apply bg-normal-purple px-2 py-1 rounded-xl mx-2 text-white font-satoshi transition-all duration-300
+            hover:bg-light-green hover:text-dark-purple hover:cursor-pointer hover:rounded-2xl hover:text-sm
+    }
+}

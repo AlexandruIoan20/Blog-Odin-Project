@@ -1,5 +1,7 @@
 'use client'
 
+import { FaBlogger } from 'react-icons/fa'; 
+import { IconContext } from 'react-icons';
 import Link from "next/link"; 
 import Image from "next/image";
 import { useState, useEffect } from 'react'; 
@@ -14,6 +16,14 @@ const AuthButton = ({ executeFunction, classes, name }) => {
             { name }
         </button>
     )
+}; 
+
+const CustomFaBlogger = () => { 
+    return( 
+        <IconContext.Provider value = {{ size: 35, color:'#491A74' }}>
+            <FaBlogger size = { 35 } /> 
+        </IconContext.Provider>
+    )
 }
 
 const NavBar = () => {
@@ -24,9 +34,7 @@ const NavBar = () => {
 
     return (
         <nav className='bg-primary-purple py-1 px-1 flex flex-row w-screen'>
-            <Link className="w-fit" href='/'>
-                <Image src="logo.svg" width = { 35}  height = {35 } alt="logo" />
-            </Link>
+            <CustomFaBlogger /> 
 
             {/* PC Design */}
             <div className="ml-auto sm:flex hidden"> 
@@ -40,7 +48,7 @@ const NavBar = () => {
                             <AuthButton 
                                 name = "Sign In"
                                 executeFunction = { () => { }}
-                                classes = 'bg-green-500'
+                                classes = 'sign-button'
                             /> 
                             <AuthButton 
                                 name = 'Log In'
