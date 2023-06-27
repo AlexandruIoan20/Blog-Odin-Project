@@ -7,6 +7,9 @@ import Image from "next/image";
 import { useState, useEffect } from 'react'; 
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react'; 
 
+// TO DO: 
+// 1. Create Phone NavBar
+
 const AuthButton = ({ executeFunction, classes, name }) => { 
     return ( 
         <button
@@ -36,15 +39,10 @@ const NavBar = () => {
         const setGlobalProviders = async () => { 
             const response = await getProviders(); 
             setProviders(response); 
-            console.log({ response} ); 
         }
 
         setGlobalProviders(); 
     }, []); 
-
-    useEffect( () => { 
-        console.log(session?.user); 
-    }, [session])
 
     return (
         <nav className = 'bg-primary-purple py-1 px-1 flex flex-row w-screen'>
