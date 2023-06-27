@@ -1,4 +1,6 @@
 import { Schema, models, model } from "mongoose";
+import User from "./user";
+import Comment from "./comment";
 
 const PostSchema = new Schema({ 
     title: { 

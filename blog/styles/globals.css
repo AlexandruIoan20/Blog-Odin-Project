@@ -18,4 +18,8 @@
         @apply bg-normal-purple px-2 py-1 rounded-xl mx-2 text-white font-satoshi transition-all duration-300
             hover:bg-light-green hover:text-dark-purple hover:cursor-pointer hover:rounded-2xl hover:text-sm
     }
+
+    .global_header { 
+        @apply font-satoshi text-5xl font-bold text-dark-purple mx-4 my-4
+    }
 }

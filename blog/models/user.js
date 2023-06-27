@@ -1,4 +1,5 @@
-import { Schema, models, model } from 'mongoose'
+import { Schema, models, model } from 'mongoose'; 
+import Post from './post';
 
 const UserSchema = new Schema({ 
     username: {

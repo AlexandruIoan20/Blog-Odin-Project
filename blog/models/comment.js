@@ -1,5 +1,8 @@
 import { Schema, models, model } from "mongoose";
 
+import Post from "./post";
+import User from "./user";
+
 const CommentSchema = new Schema({ 
     text: { 
         type: String, 
