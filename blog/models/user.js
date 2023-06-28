@@ -15,6 +15,10 @@ const UserSchema = new Schema({
     image: { 
         type: String, 
     },
+    status: { 
+        type: [String], 
+        default: ['User'], 
+    }, 
     activity: { 
         posts: {
             type: [Schema.Types.ObjectId], 
