@@ -27,4 +27,17 @@
         @apply font-satoshi text-sm bg-dark-purple text-white px-2 py-1 mx-2 rounded-xl transition-all duration-300
             hover:rounded-3xl 
     }
+
+    .form_input { 
+        @apply rounded-xl mx-4 px-4 py-1 outline-none font-satoshi
+    }
+
+    .input_label { 
+        @apply flex flex-col my-2
+    }
+
+    .submit_button { 
+        @apply bg-slate-300 py-1 px-2 rounded-xl font-inter transition-all duration-300 
+            hover:bg-slate-500 hover:text-white hover:rounded-3xl hover:text-base hover:font-semibold
+    }
 }
