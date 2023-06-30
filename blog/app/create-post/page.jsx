@@ -12,8 +12,32 @@ const CreatePost = () => {
     const [submitting, setSubmitting ] = useState(false); 
     const [post, setPost] = useState({}); 
 
-    const handleSubmit = () => { 
+    const handleSubmit = async (e) => { 
+      e.preventDefault(); 
+      setSubmitting(true); 
 
+      console.log(post); 
+      try { 
+        const response = await fetch('api/create-post',{ 
+          method: 'POST', 
+          mode: 'cors', 
+          body: JSON.stringify({ 
+            title: post.title, 
+            userId: session?.user.id, 
+            text: post.text, 
+            visibility: post.visibility, 
+          }), 
+        }); 
+
+        if(response.ok) { 
+          router.push("/"); 
+        }
+      } catch (err) {
+        console.log("We have an error")
+        console.error(err); 
+      } finally { 
+        setSubmitting(false); 
+      }
     }
 
   return (

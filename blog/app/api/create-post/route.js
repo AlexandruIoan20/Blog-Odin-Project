@@ -2,11 +2,12 @@ import Post from "@models/post";
 import { connectToDB } from "@utils/database";
 
 export const POST = async (req, res) => { 
-    const { title, text, userId, visibility } = req.json(); 
+    const { title, text, userId, visibility } = await req.json(); 
+    console.log({ title, text, userId, visibility }); 
 
     try { 
         await connectToDB(); 
-
+        console.log("Connected in request.")
         const post = new Post({ 
             title: title, 
             text: text, 
