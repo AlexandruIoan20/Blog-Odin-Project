@@ -15,7 +15,10 @@ const PostSchema = new Schema({
         type: Schema.Types.ObjectId, 
         ref: "User", 
     }, 
-
+    visibility: { 
+        type: String, 
+        required: [ true, 'Visibility is required!'], 
+    },
     interaction: { 
         likes: { 
             type: Schema.Types.Number, 

@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation'; 
 import GradesList from './Grade';
 import Alert from './Alert';
+import Link from 'next/link';
 
 const DeveloperButton = ({ name, executeFunction }) => { 
   return ( 
@@ -31,23 +32,29 @@ const Profile = ({ name }) => {
   const pathname = usePathname(); 
   const [ user, setUser ] = useState({}); 
   const [ grades, setGrades ] = useState([]); 
+  const [ activity, setActivity ] = useState({}); 
   const [ checkMyProfile, setCheckMyProfile ] = useState(false); 
   const [ showStats, setShowStats ] = useState(false); 
 
   useEffect( () => { 
     const getUserData = async () => { 
+      console.log("DONE"); 
       // Get User
       const response = await fetch(`/api${pathname}`); 
       const userResponse = await response.json(); 
+
+      console.log(userResponse); 
+
+      setUser(userResponse); 
+      setGrades(userResponse.status); 
+      setActivity(userResponse.activity); 
 
       // Check if it is my account
       const id = pathname.split('/')[2]; 
       if(id === session?.user.id)
         setCheckMyProfile(true); 
 
-      // Set user state
-      setUser(userResponse); 
-      setGrades(userResponse.status); 
+      console.log(activity); 
       console.log(userResponse); 
     }; 
 
@@ -87,6 +94,10 @@ const Profile = ({ name }) => {
           onExecute = { null }
           profileStatus = { true }
         /> 
+      }
+
+      { user?.activity != undefined && user?.activity.posts.length == 0 && checkMyProfile && 
+        <Link href = '/create-post' className='default_button'> Create Post </Link>
       }
     </main>
   )
