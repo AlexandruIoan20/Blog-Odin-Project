@@ -31,7 +31,7 @@ const DeveloperArea = ({ onShowStats }) => {
   )
 }; 
 
-const Profile = ({ name }) => {
+const Profile = ({ name, onEditPost, onDeletePost }) => {
   const { data: session } = useSession(); 
   const pathname = usePathname(); 
   const [ user, setUser ] = useState({}); 
@@ -74,6 +74,25 @@ const Profile = ({ name }) => {
     setShowStats(false); 
   }
 
+  const handleEditPost = (post) => { 
+
+  }
+
+  const handleDeletePost = async (post) => { 
+    console.log(`api/posts/${post._id}`); 
+    await fetch(`api/posts/${post._id}`, { 
+      method: "DELETE", 
+      mode: 'cors',
+      header: { 
+        'Content-Type': 'application/json', 
+      }
+    }); 
+
+    const filteredPosts = user.activity.posts.filter(el => el._id != post._id); 
+    setUser({ ...user, 'activity.posts': filteredPosts}); 
+    setActivity({ ...activity, posts: filteredPosts});
+  }
+
   return (
     <main>
       <div className='inline-flex w-screen flex-row'>
@@ -108,6 +127,8 @@ const Profile = ({ name }) => {
         user.activity.posts.map(post => { 
           return ( 
             <PostCard 
+              onDeletePost = { handleDeletePost }
+              onEditPost = { handleEditPost }
               key = { post._id }
               dev = { user._id === session?.user.id }
               post = { post }
