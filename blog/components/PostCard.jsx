@@ -1,8 +1,15 @@
-import React from 'react'
+'use client'; 
 
-const PostCard = () => {
+import React from 'react'
+import { usePathname, useRouter } from 'next/navigation'
+
+const PostCard = ({ dev, post }) => {
+  const pathname = usePathname (); 
+  const router = useRouter (); 
   return (
-    <div>PostCard</div>
+    <article>
+      <h2>{ post.title } </h2>
+    </article>
   )
 }
 

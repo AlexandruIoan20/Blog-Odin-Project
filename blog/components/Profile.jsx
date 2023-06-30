@@ -5,12 +5,16 @@ import { usePathname } from 'next/navigation';
 import GradesList from './Grade';
 import Alert from './Alert';
 import Link from 'next/link';
+import PostCard from './PostCard';
+
+const BUTTON_GENERAL_CLASSNAME =  `mx-5 text-base font-satoshi bg-light-green px-2 py-1 font-medium 
+  rounded-xl hover:rounded-3xl transition-all duration-300 hover:text-xl`; //Class for developer button in profile
 
 const DeveloperButton = ({ name, executeFunction }) => { 
   return ( 
     <button
        onClick = { executeFunction } 
-       className = { `mx-5 text-base font-satoshi bg-light-green px-2 py-1 font-medium rounded-xl hover:rounded-3xl transition-all duration-300 hover:text-xl` } 
+       className = { BUTTON_GENERAL_CLASSNAME }
     >{ name } </button>
   )
 }
@@ -20,7 +24,7 @@ const DeveloperArea = ({ onShowStats }) => {
     <div className= 'flex flex-col justify-center content-center ml-auto mr-10'>
         <ul className='flex flex-row'>
           <DeveloperButton name = { 'View Stats' } executeFunction = { onShowStats }  /> 
-          <DeveloperButton name = { 'testB' } executeFunction = { () => {  }} /> 
+          <Link href = '/create-post' className= { BUTTON_GENERAL_CLASSNAME }> Create Post </Link>
           <DeveloperButton name = { 'testB' } executeFunction = { () => { }} /> 
         </ul>
     </div>
@@ -97,8 +101,20 @@ const Profile = ({ name }) => {
       }
 
       { user?.activity != undefined && user?.activity.posts.length == 0 && checkMyProfile && 
-        <Link href = '/create-post' className='default_button'> Create Post </Link>
+        <Link href = '/create-post' className='default_button'> Create Your First Post </Link>
       }
+
+      { user?.activity != undefined && user?.activity.posts.length > 0 && 
+        user.activity.posts.map(post => { 
+          return ( 
+            <PostCard 
+              key = { post._id }
+              dev = { user._id === session?.user.id }
+              post = { post }
+            /> 
+          )
+        })
+  } 
     </main>
   )
 }

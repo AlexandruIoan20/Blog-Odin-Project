@@ -1,9 +1,9 @@
 import Post from "@models/post";
+import User from "@models/user";
 import { connectToDB } from "@utils/database";
 
 export const POST = async (req, res) => { 
     const { title, text, userId, visibility } = await req.json(); 
-    console.log({ title, text, userId, visibility }); 
 
     try { 
         await connectToDB(); 
@@ -15,9 +15,11 @@ export const POST = async (req, res) => {
             visibility: visibility, 
         }); 
 
-        await post.save(); 
+        await post.save();   
+        await User.findByIdAndUpdate({ _id: userId }, { $push: {'activity.posts': post._id.toString()}}); 
         return new Response('Post created succesfully', { status: 200 }); 
-    } catch (err) { 
+    } catch (err) {
+        console.log(err);  
         return new Response(`Something bad happened on the server side: ${err}`, { status: 500 }); 
     }
 }
