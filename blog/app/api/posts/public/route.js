@@ -4,7 +4,7 @@ import Post from "@models/post";
 export const GET = async (req, res) => { 
     try { 
         await connectToDB();
-        const posts = await Post.find({ visibility: 'public'}); 
+        const posts = await Post.find({ visibility: 'public'}).populate('creator'); 
 
         if(posts.length === 0) { 
             return new Response("No posts available", { status: 200 }); 
