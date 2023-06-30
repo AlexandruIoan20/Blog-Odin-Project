@@ -1,7 +1,5 @@
 'use client'; 
-import { useState, useEffect } from 'react'; 
-import { useSession } from 'next-auth/react';
-import { usePathname } from 'next/navigation'; 
+import { useState } from 'react';
 import GradesList from './Grade';
 import Alert from './Alert';
 import Link from 'next/link';
@@ -31,66 +29,15 @@ const DeveloperArea = ({ onShowStats }) => {
   )
 }; 
 
-const Profile = ({ name, onEditPost, onDeletePost }) => {
-  const { data: session } = useSession(); 
-  const pathname = usePathname(); 
-  const [ user, setUser ] = useState({}); 
-  const [ grades, setGrades ] = useState([]); 
-  const [ activity, setActivity ] = useState({}); 
-  const [ checkMyProfile, setCheckMyProfile ] = useState(false); 
+const Profile = ({ name, handleDeletePost, handleEditPost, checkMyProfile, grades }) => {
+
   const [ showStats, setShowStats ] = useState(false); 
-
-  useEffect( () => { 
-    const getUserData = async () => { 
-      console.log("DONE"); 
-      // Get User
-      const response = await fetch(`/api${pathname}`); 
-      const userResponse = await response.json(); 
-
-      console.log(userResponse); 
-
-      setUser(userResponse); 
-      setGrades(userResponse.status); 
-      setActivity(userResponse.activity); 
-
-      // Check if it is my account
-      const id = pathname.split('/')[2]; 
-      if(id === session?.user.id)
-        setCheckMyProfile(true); 
-
-      console.log(activity); 
-      console.log(userResponse); 
-    }; 
-
-    getUserData(); 
-  }, []); 
-
-
   const handleShowStats = () => { 
     setShowStats((x) => !x); 
   }
 
   const handleCancel = () => { 
     setShowStats(false); 
-  }
-
-  const handleEditPost = (post) => { 
-
-  }
-
-  const handleDeletePost = async (post) => { 
-    console.log(`api/posts/${post._id}`); 
-    await fetch(`api/posts/${post._id}`, { 
-      method: "DELETE", 
-      mode: 'cors',
-      header: { 
-        'Content-Type': 'application/json', 
-      }
-    }); 
-
-    const filteredPosts = user.activity.posts.filter(el => el._id != post._id); 
-    setUser({ ...user, 'activity.posts': filteredPosts}); 
-    setActivity({ ...activity, posts: filteredPosts});
   }
 
   return (
