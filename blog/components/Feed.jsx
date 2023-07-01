@@ -9,10 +9,20 @@ const Feed = () => {
 
   useEffect( () => {
     const getPostsData = async () => { 
-      const response = await fetch('api/posts/public'); 
-      const postsResponse = await response.json(); 
-
-      setPosts(postsResponse); 
+      try { 
+        const response = await fetch('/api/posts/public'); 
+        const postsResponse = await response.json() 
+        
+        if(postsResponse.length === 0) {
+          setPosts(['No posts available']); 
+          return; 
+         } 
+  
+        setPosts(postsResponse); 
+      } catch (err) { 
+        console.log("Error in feed");  
+        console.error(err); 
+      }
     }
 
     getPostsData(); 
@@ -23,7 +33,11 @@ const Feed = () => {
         <p className='font-satoshi text-base'> Loading... </p>
       }
 
-      { posts.length > 0 && 
+      { posts[0] === 'No posts available' && 
+        <p> { posts[0] } </p>
+      }
+
+      { posts.length > 0 && posts[0] != 'No posts available' && 
         posts.map(post => { 
           return( 
             <PostCard 

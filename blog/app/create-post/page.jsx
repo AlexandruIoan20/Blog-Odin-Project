@@ -15,8 +15,7 @@ const CreatePost = () => {
     const handleSubmit = async (e) => { 
       e.preventDefault(); 
       setSubmitting(true); 
-
-      console.log(post); 
+      
       try { 
         const response = await fetch('api/create-post',{ 
           method: 'POST', 

@@ -4,6 +4,7 @@ import GradesList from './Grade';
 import Alert from './Alert';
 import Link from 'next/link';
 import PostCard from './PostCard';
+import { useSession } from 'next-auth/react';
 
 const BUTTON_GENERAL_CLASSNAME =  `mx-5 text-base font-satoshi bg-light-green px-2 py-1 font-medium 
   rounded-xl hover:rounded-3xl transition-all duration-300 hover:text-xl`; //Class for developer button in profile
@@ -13,7 +14,7 @@ const DeveloperButton = ({ name, executeFunction }) => {
     <button
        onClick = { executeFunction } 
        className = { BUTTON_GENERAL_CLASSNAME }
-    >{ name } </button>
+    > { name } </button>
   )
 }
 
@@ -29,7 +30,8 @@ const DeveloperArea = ({ onShowStats }) => {
   )
 }; 
 
-const Profile = ({ name, handleDeletePost, handleEditPost, checkMyProfile, grades }) => {
+const Profile = ({ name, handleDeletePost, handleEditPost, checkMyProfile, grades, user }) => {
+  const { data: session } = useSession(); 
 
   const [ showStats, setShowStats ] = useState(false); 
   const handleShowStats = () => { 

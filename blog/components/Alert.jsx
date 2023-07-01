@@ -1,7 +1,3 @@
-'use client'; 
-
-import { useEffect } from 'react'
-
 const Alert = ({ onCancel, content, profileStatus, onExecute }) => {
   return (
     <dialog open className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-20 py-2  

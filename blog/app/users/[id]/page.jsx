@@ -44,27 +44,46 @@ const ProfilePage = () => {
   }
 
   const handleDeletePost = async (post) => { 
-    console.log(`api/posts/${post._id}`); 
-    await fetch(`api/posts/${post._id}`, { 
-      method: "DELETE", 
-      mode: 'cors',
-      header: { 
-        'Content-Type': 'application/json', 
-      }
-    }); 
+    const userPosts = user.activity.posts; 
+    try { 
+      await fetch(`/api/posts/${post._id.toString()}`, { 
+        method: "DELETE", 
+        mode: 'cors',
+        header: { 
+          'Content-Type': 'application/json', 
+        }
+      }); 
+  
+      console.log({ postid: post._id, filteredPosts}); 
+      const filteredPosts = userPosts.filter(el => el._id != post._id); 
+      setUser({ ...user, 'activity.posts': filteredPosts}); 
+      setActivity({ ...activity, posts: filteredPosts});
 
-    const filteredPosts = user.activity.posts.filter(el => el._id != post._id); 
-    setUser({ ...user, 'activity.posts': filteredPosts}); 
-    setActivity({ ...activity, posts: filteredPosts});
+      console.log({ user }); 
+    } catch (err) { 
+      console.log("We have an error"); 
+      console.error(err); 
+    }
   }
   return (
-    <Profile 
-      name = 'My'
-      handleEditPost = { handleEditPost }
-      handleDeletePost = { handleDeletePost }
-      checkMyProfile = { checkMyProfile }
-      grades = { grades }
-    />
+    <>
+      { user != undefined ? 
+      (
+        <Profile 
+          name = 'My'
+          user = { user }
+          handleEditPost = { handleEditPost }
+          handleDeletePost = { handleDeletePost }
+          checkMyProfile = { checkMyProfile }
+          grades = { grades }
+        />
+      ) 
+      : 
+      ( 
+        <p> No user yet </p>
+      )
+    }
+    </>
   )
 }
 
