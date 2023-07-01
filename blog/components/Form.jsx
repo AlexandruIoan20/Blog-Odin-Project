@@ -20,6 +20,7 @@ const Form = ({ type, submitting, post, setPost, handleSubmit }) => {
             required
             placeholder='An amazing holiday'
             className='form_input'
+            value = { post.title }
             onChange = { (e) => { setPost({...post, title: e.target.value })}}
           />
         </label>
@@ -29,6 +30,7 @@ const Form = ({ type, submitting, post, setPost, handleSubmit }) => {
           <select 
             className='mx-8 my-2 bg-slate-300 px-2 py-1 rounded-xl'
             required
+            value = { post.visibility }
             onChange = { (e) => { setPost({ ...post, visibility: e.target.value })}}
           >
             <option value= ''>  Choose the status for your post.  </option>
@@ -45,6 +47,7 @@ const Form = ({ type, submitting, post, setPost, handleSubmit }) => {
           <textarea 
             type="text"
             required 
+            value = { post.text }
             placeholder =  "It was a gorgeous day of summer..."
             className='form_input h-40'
             onChange = { (e) => { setPost({ ...post, text: e.target.value })}}  

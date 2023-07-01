@@ -19,7 +19,8 @@ const UpdatePage = () => {
             method: 'GET'
           }); 
 
-          const postResponse = response.json(); 
+          const postResponse = await response.json(); 
+          console.log(postResponse); 
           setPost(postResponse); 
         } catch(err) { 
           console.error(err); 
@@ -39,7 +40,7 @@ const UpdatePage = () => {
             mode: 'cors', 
             body: JSON.stringify({  
               title: post.title, 
-              creator: post.creator, 
+              visibility: post.visibility, 
               text: post.text, 
             }), 
             header: { 
@@ -62,6 +63,7 @@ const UpdatePage = () => {
             type = 'Edit'
             submitting = { submitting }
             post = { post }
+            setPost = { setPost }
             handleSubmit = { editPost }
         /> 
     </section>

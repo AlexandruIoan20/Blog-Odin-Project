@@ -17,3 +17,43 @@ export const DELETE = async(req, { params }) => {
         return new Response(`Can't delete the post due to this error: ${err}`, { status: 500 })
     }
 }
+
+export const GET = async(req, { params }) => { 
+    try { 
+        await connectToDB(); 
+
+        const post = await Post.findById(params.id); 
+        console.log(post); 
+        return new Response(JSON.stringify(post), { status: 200 }); 
+    } catch(err) { 
+        console.log(err); 
+        return new Response('Cannot find the post', { status: 404 }); 
+    }
+}
+
+export const PATCH = async (req, { params }) => { 
+    const { title, visibility, text } = await req.json(); 
+    console.log({ title, visibility, text }); 
+
+    console.log(params.id); 
+
+    try { 
+        await connectToDB(); 
+
+        const post = await Post.findById(params.id); 
+        if(!post) { 
+            return new Response('Cannot find the post', { status: 404}); 
+        }
+
+        post.title = title; 
+        post.visibility = visibility; 
+        post.text = text; 
+
+        await post.save (); 
+        console.log(post); 
+        return new Response(`Post saved: ${post}`, { status: 200 }); 
+    } catch(err) { 
+        console.log(err); 
+        return new Response('Cannot update the post due to an error', { status: 500 }); 
+    }
+}
