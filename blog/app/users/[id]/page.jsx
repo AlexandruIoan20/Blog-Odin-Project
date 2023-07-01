@@ -3,11 +3,13 @@
 import { useState, useEffect } from "react";
 import Profile from "@components/Profile"
 import { useSession } from "next-auth/react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const ProfilePage = () => {
   const { data: session } = useSession(); 
+  const router = useRouter (); 
   const pathname = usePathname(); 
+
   const [ user, setUser ] = useState({}); 
   const [ grades, setGrades ] = useState([]); 
   const [ activity, setActivity ] = useState({}); 
@@ -16,24 +18,29 @@ const ProfilePage = () => {
   useEffect( () => { 
     const getUserData = async () => { 
       // Get User
-      const response = await fetch(`/api${pathname}`); 
-      const userResponse = await response.json(); 
-
-      setUser(userResponse); 
-      setGrades(userResponse.status); 
-      setActivity(userResponse.activity); 
-
-      // Check if it is my account
-      const id = pathname.split('/')[2]; 
-      if(id === session?.user.id)
-        setCheckMyProfile(true); 
+      try { 
+        const response = await fetch(`/api${pathname}`); 
+        const userResponse = await response.json(); 
+  
+        setUser(userResponse); 
+        setGrades(userResponse.status); 
+        setActivity(userResponse.activity); 
+  
+        // Check if it is my account
+        const id = pathname.split('/')[2]; 
+        if(id === session?.user.id)
+          setCheckMyProfile(true); 
+      } catch(err) { 
+        console.log(err); 
+      }
     }; 
 
     getUserData(); 
   }, []); 
   
   const handleEditPost = (post) => { 
-
+    console.log(post); 
+    router.push(`/update-post?id=${post._id}`); 
   }
 
   const handleDeletePost = async (post) => { 

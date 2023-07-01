@@ -28,8 +28,8 @@ const PostCard = ({ dev, post, onDeletePost, onEditPost }) => {
       </article>
       { dev && pathName ==  `/users/${session.user.id}` &&
           <div className='mx-8 bg-slate-300 rounded-xl py-2 flex justify-center gap-x-64'>
-            <Link href = '/'>Edit</Link>
-            <button onClick = { () => { onDeletePost(post);}}> 
+            <button type = 'button' onClick = { () => onEditPost(post) }>Edit</button>
+            <button type = 'button' onClick = { () => { onDeletePost(post);}}> 
               Delete
             </button>
           </div>
