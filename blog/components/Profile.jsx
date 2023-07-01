@@ -73,7 +73,7 @@ const Profile = ({ name, handleDeletePost, handleEditPost, checkMyProfile, grade
       }
 
       { user?.activity != undefined && user?.activity.posts.length > 0 && 
-        user.activity.posts.map(post => { 
+        user?.activity.posts.map(post => { 
           return ( 
             <PostCard 
               onDeletePost = { handleDeletePost }

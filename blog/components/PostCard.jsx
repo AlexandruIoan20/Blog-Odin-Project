@@ -4,6 +4,7 @@ import React from 'react'
 import { usePathname, useRouter } from 'next/navigation'; 
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
+import { useState } from 'react';
 
 const PostCard = ({ dev, post, onDeletePost, onEditPost }) => {
   const { data: session } = useSession(); 
@@ -28,7 +29,9 @@ const PostCard = ({ dev, post, onDeletePost, onEditPost }) => {
       { dev && pathName ==  `/users/${session.user.id}` &&
           <div className='mx-8 bg-slate-300 rounded-xl py-2 flex justify-center gap-x-64'>
             <Link href = '/'>Edit</Link>
-            <button onClick = { () => { onDeletePost(post) }}> Delete</button>
+            <button onClick = { () => { onDeletePost(post);}}> 
+              Delete
+            </button>
           </div>
       }
     </div>

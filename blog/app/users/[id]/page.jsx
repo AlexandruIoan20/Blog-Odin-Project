@@ -14,14 +14,10 @@ const ProfilePage = () => {
   const [ checkMyProfile, setCheckMyProfile ] = useState(false); 
 
   useEffect( () => { 
-    console.log(`/api${pathname}`); 
     const getUserData = async () => { 
-      console.log("DONE"); 
       // Get User
       const response = await fetch(`/api${pathname}`); 
       const userResponse = await response.json(); 
-
-      console.log(userResponse); 
 
       setUser(userResponse); 
       setGrades(userResponse.status); 
@@ -31,9 +27,6 @@ const ProfilePage = () => {
       const id = pathname.split('/')[2]; 
       if(id === session?.user.id)
         setCheckMyProfile(true); 
-
-      console.log(activity); 
-      console.log(userResponse); 
     }; 
 
     getUserData(); 
@@ -54,9 +47,8 @@ const ProfilePage = () => {
         }
       }); 
   
-      console.log({ postid: post._id, filteredPosts}); 
       const filteredPosts = userPosts.filter(el => el._id != post._id); 
-      setUser({ ...user, 'activity.posts': filteredPosts}); 
+      setUser({ ...user, activity: { ... user.activity, posts: filteredPosts }}) 
       setActivity({ ...activity, posts: filteredPosts});
 
       console.log({ user }); 
