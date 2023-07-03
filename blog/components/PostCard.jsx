@@ -25,7 +25,7 @@ const PostCard = ({ dev, post, onDeletePost, onEditPost }) => {
             </p>
           </div>
           <div className='flex justify-end ml-auto'>
-            <button className='default_button'> View Post</button>
+            <Link href = { `/posts/${post._id}` } className='default_button'> View Post</Link>
           </div>
         </article>
         <article>
